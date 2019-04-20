@@ -1,11 +1,15 @@
-# Sheep
-A prototype for digitalizing supervision of sheep
+# Gjeter
+A prototype for digitalizing supervision of sheep (in norwegian)
+
+###Sources
+Used the tutorial from [Apache Cordova Tutorial][1] as a beginner template. 
+
+[1]: https://ccoenraets.github.io/cordova-tutorial/index.html
 
 ### Running on device
 ```bash
 cordova run android
 ```
-
 
 ### Original set up
 This should not be necessary, as the config.xml file should install this on build.
