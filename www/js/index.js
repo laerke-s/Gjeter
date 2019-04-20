@@ -9,7 +9,10 @@
         slider.slidePage(new StartMenuView().render().$el);
     });
     router.addRoute('map', function () {
-        slider.slidePage(new MapView().render().$el);
+        var mapPage = new MapView();
+        slider.slidePage(mapPage.render().$el);
+        /*Must do it like this to ensure that mapcontainer has been made*/
+        mapPage.initMap();
     });
     router.start();
     /* --------------------------------- Event Registration -------------------------------- */
