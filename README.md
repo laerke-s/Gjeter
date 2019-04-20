@@ -1,7 +1,7 @@
 # Gjeter
 A prototype for digitalizing supervision of sheep (in norwegian)
 
-###Sources
+### Sources
 Used the tutorial from [Apache Cordova Tutorial][1] as a beginner template. 
 
 [1]: https://ccoenraets.github.io/cordova-tutorial/index.html
