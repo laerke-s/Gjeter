@@ -7,7 +7,6 @@ var MapView = function () {
         // Define a div wrapper for the view (used to attach events)
         this.$el = $('<div/>');
         this.$el.on('click', '#location-btn', this.getLocation);
-        this.$el.after()
     };
 
     this.render = function () {
@@ -16,11 +15,21 @@ var MapView = function () {
     };
 
     this.initMap = function () {
-        var myMap = L.map('map-container').setView([60.14, 10.25], 11);
+        var map = L.map('map-container').fitWorld();
         L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
             attribution: '<a href="http://www.kartverket.no/">Kartverket</a>'
-        }).addTo(myMap);
+        }).addTo(map);
+        L.control.scale({
+            imperial: false
+        }).addTo(map);
+        map.locate({
+            setView: true,
+            maxZoom: 16,
+            maximumAge: 3600000,
+            enableHighAccuracy: true,
+        });
     };
+
 
     this.getLocation = function (event) {
         var options = {
