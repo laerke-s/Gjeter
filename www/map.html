@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Gjeter</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+    <header class="bar bar-nav">
+        <a class="icon icon-left-nav pull-left" href="index.html" data-transition="slide-out"></a>
+        <h1 class="title">Kart</h1>
+        <a class="icon icon-download pull-right" href="#download"></a>
+    </header>
+
+    <div class="content content-padded">
+        <div id="map-container" style="height: 100%; width: 100%;"></div>
+        <div id="download" class="popover">
+            <header class="bar bar-nav">
+                <h1 class="title">Last ned</h1>
+            </header>
+            <ul class="table-view">
+                <li class="table-view-cell">
+                    <a>
+                        Last ned kart fra nett
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -3,53 +3,49 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <title>Gjeter</title>
 
-    <link href="assets/css/pageslider.css" rel="stylesheet">
-    <link href="assets/ratchet/css/ratchet.css" rel="stylesheet">
-    <link href="assets/css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/leaflet/leaflet.css" />
-    <script src="assets/leaflet/leaflet.js"></script>
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Include the compiled CSS -->
+    <link href="lib/ratchet/css/ratchet.min.css" rel="stylesheet">
+    <link href="lib/leaflet/leaflet.css" rel="stylesheet">
+    <!-- For that speciffic Android look
+    <link href="lib/ratchet/css/ratchet-theme-android.min.css" rel="stylesheet">
+    -->
+    <!-- Include the compiled JS -->
+    <script src="lib/ratchet/js/ratchet.min.js"></script>
+    <script src="lib/leaflet/leaflet.js"></script>
 </head>
 
 <body>
 
-    <!-- Start page -->
-    <script id="home-tpl" type="text/template">
-        <header class="bar bar-nav">
-            <h1 class="title">{{title}}</h1>
-        </header>
-        <div class="content content-padded">
-            <a href="#map" class="btn btn-block btn-positive">Kart</a>
-        </div>
-    </script>
+    <!-- Make sure all your bars are the first things in your <body> -->
+    <header class="bar bar-nav">
+        <h1 class="title">Start Tur</h1>
+    </header>
 
-    <!-- Map page -->
-    <script id="map-tpl" type="text/template">
-        <header class="bar bar-nav">
-            <a class="btn btn-link btn-nav pull-left" href="#">
-                  <span class="icon icon-left-nav"></span>
-              </a>
-            <h1 class="title">{{title}}</h1>
-        </header>
-        <div class="content content-padded">
-            <a id="location-btn" class="btn btn-block btn-positive">Koordinater</a>
-            <div id="map-container" style="height: 80%; width: 100%;"></div>
+    <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+    <div class="content content-padded">
+        <div class="card">
+            <ul class="table-view">
+                <li class="table-view-cell">
+                    <a class="navigate-right" href="map.html" data-transition="slide-in">
+                        Last ned kart
+                    </a>
+                </li>
+            </ul>
         </div>
-    </script>
-
+    </div>
     <script src="cordova.js"></script>
     <script src="lib/fastclick.js"></script>
-    <script src="lib/handlebars.js"></script>
-    <script src="lib/jquery.js"></script>
-    <script src="lib/router.js"></script>
-    <script src="lib/pageslider.js"></script>
-
-    <script src="js/StartMenuView.js"></script>
-    <script src="js/MapView.js"></script>
     <script src="js/index.js"></script>
-
 </body>
 
 </html>
