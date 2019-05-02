@@ -1,6 +1,5 @@
 // We use an "Immediate Function" to initialize the application to avoid leaving anything behind in the global scope
 (function () {
-
     /* ---------------------------------- Local Variables ---------------------------------- */
     StartMenuView.prototype.template = Handlebars.compile($("#home-tpl").html());
     MapView.prototype.template = Handlebars.compile($("#map-tpl").html());
