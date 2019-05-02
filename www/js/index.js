@@ -4,6 +4,7 @@
     /* ---------------------------------- Local Variables ---------------------------------- */
     StartMenuView.prototype.template = Handlebars.compile($("#home-tpl").html());
     MapView.prototype.template = Handlebars.compile($("#map-tpl").html());
+    ObsView.prototype.template = Handlebars.compile($("#obs-tpl").html());
     var slider = new PageSlider($('body'));
 
     router.addRoute('', function () {
@@ -12,7 +13,11 @@
     router.addRoute('map', function () {
         var mapPage = new MapView();
         slider.slidePage(mapPage.render().$el);
-        slider.ifFromHash('', mapPage.initMap);
+        mapPage.initMap();
+        //slider.ifFromHash('', mapPage.initMap);
+    });
+    router.addRoute('obs', function () {
+        slider.slidePage(new ObsView().render().$el);
     });
     router.start();
     /* --------------------------------- Event Registration -------------------------------- */
