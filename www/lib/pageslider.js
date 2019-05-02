@@ -10,7 +10,7 @@ function PageSlider(container) {
         stateHistory = [];
 
     // Use this function if you want PageSlider to automatically determine the sliding direction based on the state history
-    this.slidePage = function(page) {
+    this.slidePage = function (page) {
 
         var l = stateHistory.length,
             state = window.location.hash;
@@ -20,7 +20,7 @@ function PageSlider(container) {
             this.slidePageFrom(page);
             return;
         }
-        if (state === stateHistory[l-2]) {
+        if (state === stateHistory[l - 2]) {
             stateHistory.pop();
             this.slidePageFrom(page, 'left');
         } else {
@@ -31,7 +31,7 @@ function PageSlider(container) {
     }
 
     // Use this function directly if you want to control the sliding direction outside PageSlider
-    this.slidePageFrom = function(page, from) {
+    this.slidePageFrom = function (page, from) {
 
         container.append(page);
 
@@ -44,7 +44,7 @@ function PageSlider(container) {
         // Position the page at the starting position of the animation
         page.attr("class", "page " + from);
 
-        currentPage.one('webkitTransitionEnd', function(e) {
+        currentPage.one('webkitTransitionEnd', function (e) {
             $(e.target).remove();
         });
 
@@ -55,6 +55,12 @@ function PageSlider(container) {
         page.attr("class", "page transition center");
         currentPage.attr("class", "page transition " + (from === "left" ? "right" : "left"));
         currentPage = page;
+    }
+
+    this.ifFromHash = function (fromHash, func) {
+        if (stateHistory[stateHistory.length - 2] === fromHash) {
+            func();
+        }
     }
 
 }

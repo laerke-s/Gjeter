@@ -1,7 +1,4 @@
 var MapView = function () {
-    var context = {
-        title: "Kart visning"
-    };
 
     this.initialize = function () {
         // Define a div wrapper for the view (used to attach events)
@@ -10,7 +7,7 @@ var MapView = function () {
     };
 
     this.render = function () {
-        this.$el.html(this.template(context));
+        this.$el.html(this.template());
         return this;
     };
 
