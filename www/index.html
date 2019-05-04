@@ -48,12 +48,129 @@
             <h1 class="title">Velg observasjon</h1>
         </header>
         <div class="content content-padded">
-            <a href="#map" class="btn btn-block btn-positive">Sau</a>
-            <a href="#map" class="btn btn-block btn-positive">Død sau</a>
-            <a href="#map" class="btn btn-block btn-positive">Annet</a>
+            <a href="#sheep" class="btn btn-block btn-positive">Saueflokk</a>
+            <a href="#sheep" class="btn btn-block btn-positive">Død sau</a>
+            <a href="#other" class="btn btn-block btn-positive">Annet</a>
         </div>
     </div>
 
+    <!-- Sheep page -->
+    <div class="sheep page">
+        <header class="bar bar-nav">
+            <a class="btn btn-link btn-nav pull-left" href="#obs">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title">Observert saueflokk</h1>
+        </header>
+        <div class="content content-padded">
+            <ul class="table-view">
+                <li class="table-view-cell">
+                    <a class="navigate-right" href="#register">
+                        <span class="sheep_count badge">-1</span>
+                        Sau
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="navigate-right">
+                        <span class="lamb_count badge">-1</span>
+                        Lam
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="navigate-right">
+                        <span class="total_count badge">-1</span>
+                        Totalt antall
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="#obs">
+                Avbryt
+            </a>
+            <a class="tab-item" href="#map">
+                Lagre
+            </a>
+        </nav>
+    </div>
+
+    <!-- Register page -->
+    <div class="register page">
+        <header class="bar bar-nav">
+            <a class="btn btn-link btn-nav pull-left" href="#sheep">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title">Sau</h1>
+        </header>
+        <div class="content content-padded" style="display: flex; flex-flow: column">
+            <ul class="table-view">
+                <li class="table-view-cell" style="padding-right: 10px; display: flex; justify-content: space-around;">
+                    <p style="display: inline">Antall registrert:</p>
+                    <span>
+                        <button id="minus" class="btn">-</button>
+                        <output class="sheep_count btn">-1</output>
+                        <button id="plus" class="btn">+</button>
+                    </span>
+                </li>
+                <li class="table-view-cell">
+                    <p style="display: inline">Velg farge:</p>
+                    <div>
+                        <span>
+                            <input type="radio" name="color" value="white" checked>
+                            <label for="huey">Hvit</label>
+                        </span>
+
+                        <span>
+                            <input type="radio" name="color" value="black">
+                            <label for="dewey">Svart</label>
+                        </span>
+
+                        <span>
+                            <input type="radio" name="color" value="brown">
+                            <label for="louie">Brun</label>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <div id="register_div" style="flex-grow: 1; display: flex; justify-content: center; flex-wrap: wrap;">
+                <p>Dra (swipe) for å registrere et individ</p>
+            </div>
+            <nav class="bar bar-tab">
+                <a class="tab-item" href="#obs">
+                    Avbryt
+                </a>
+                <a class="tab-item" href="#map">
+                    Lagre
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Other page -->
+    <div class="other page">
+        <header class="bar bar-nav">
+            <a class="btn btn-link btn-nav pull-left" href="#obs">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title">Annet</h1>
+        </header>
+        <div class="content content-padded">
+            <form>
+                <input type="text" placeholder="Emne">
+                <textarea rows="7" placeholder="Hva har du observert?"></textarea>
+            </form>
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="#obs">
+                Avbryt
+            </a>
+            <a class="tab-item" href="#map">
+                Lagre
+            </a>
+        </nav>
+    </div>
+
+    <!-- Error page -->
     <div class="error page">
         <h3>Sorry, something went wrong :(</h3>
     </div>

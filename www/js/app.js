@@ -5,16 +5,33 @@
         '': function () {
             renderAnyPage('.start');
         },
-        // Single Products page.
+        // Map with markers for your journey and observations
         '#map': function () {
+            sheep = 0;
+            lamb = 0;
+            total = 0;
             renderAnyPage('.map');
         },
-        // Page with filtered products
+        // Page with observation options
         '#obs': function () {
             renderAnyPage('.obs');
+        },
+        '#sheep': function () {
+            updateCounts();
+            renderAnyPage('.sheep');
+        },
+        '#register': function () {
+            updateCounts();
+            renderAnyPage('.register');
+        },
+        '#other': function () {
+            renderAnyPage('.other');
         }
     };
     var map;
+    var sheep = 0;
+    var lamb = 0;
+    var total = 0;
 
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
@@ -53,6 +70,17 @@
         $(selector).show();
     }
 
+    function updateCounts() {
+        $('.sheep_count').text(sheep.toString());
+        $('.lamb_count').text(lamb.toString());
+        $('.total_count').text(total.toString());
+    }
+
+    function addCount() {
+        sheep++;
+        updateCounts();
+    }
+
     function initMap() {
         map = L.map('map-container').fitWorld();
         // Fetching map from Kartverket
@@ -77,8 +105,10 @@
             L.circleMarker(e.latlng, {
                     color: 'red'
                 }).addTo(map)
+                .on('click', function (e) {
+                    window.location.hash = 'obs';
+                })
                 .bindPopup("Din obervasjon er på:<br/>" + e.latlng.toString());
-            window.location.hash = 'obs';
         }
 
         function onLocationFound(e) {
@@ -91,16 +121,16 @@
             alert(e.message);
         }
 
-        map.on('click', mapDBClick);
+        map.on('bdclick', mapDBClick);
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
     }
-
 
     // If on mobile
     document.addEventListener('deviceready', function () {
         FastClick.attach(document.body);
     }, false);
     // Manually trigger a hashchange to start the app.
+    $('#register_div').on('click', addCount);
     $(window).trigger('hashchange');
 }());
