@@ -16,22 +16,29 @@
         '#obs': function () {
             renderAnyPage('.obs');
         },
-        '#sheep': function () {
+        '#herd': function () {
             updateCounts();
-            renderAnyPage('.sheep');
+            renderAnyPage('.herd');
         },
-        '#register': function () {
-            updateCounts();
-            renderAnyPage('.register');
+        '#register_sheep': function () {
+            renderRegisterPage('sheep');
+        },
+        '#register_lamb': function () {
+            renderRegisterPage('lamb');
+        },
+        '#register_total': function () {
+            renderRegisterPage('total');
         },
         '#other': function () {
             renderAnyPage('.other');
         }
     };
     var map;
-    var sheep = 0;
-    var lamb = 0;
-    var total = 0;
+    // This is very ugly, and should have been a map,
+    // but I found no elegant way of saying ++ on a map value.
+    // counters[0]=sheep, counters[1]=lamb, counters[2]=total
+    var counters = [0, 0, 0];
+    var currentlyCounting = -1;
 
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
@@ -70,15 +77,51 @@
         $(selector).show();
     }
 
+    function renderRegisterPage(regID) {
+        var title = $('.register .title');
+        var colorLst = $('#color_list');
+        switch (regID) {
+            case 'sheep':
+                currentlyCounting = 0;
+                title.text('Sau');
+                colorLst.show();
+                break;
+            case 'lamb':
+                currentlyCounting = 1;
+                title.text('Lam');
+                colorLst.show();
+                break;
+            case 'total':
+                currentlyCounting = 2;
+                title.text('Totalt antall');
+                colorLst.hide();
+                break;
+            default:
+        }
+        updateCountBtn();
+        renderAnyPage('.register');
+    }
+
     function updateCounts() {
-        $('.sheep_count').text(sheep.toString());
-        $('.lamb_count').text(lamb.toString());
-        $('.total_count').text(total.toString());
+        $('.sheep_count').text(counters[0].toString());
+        $('.lamb_count').text(counters[1].toString());
+        $('.total_count').text(counters[2].toString());
+    }
+
+    function updateCountBtn() {
+        $('#count_btn').text(counters[currentlyCounting].toString());
     }
 
     function addCount() {
-        sheep++;
-        updateCounts();
+        counters[currentlyCounting]++;
+        updateCountBtn();
+    }
+
+    function minusCount() {
+        if (counters[currentlyCounting] > 0) {
+            counters[currentlyCounting]--;
+            updateCountBtn();
+        }
     }
 
     function initMap() {
@@ -132,5 +175,7 @@
     }, false);
     // Manually trigger a hashchange to start the app.
     $('#register_div').on('touchend', addCount);
+    $('#plus').on('click', addCount);
+    $('#minus').on('click', minusCount);
     $(window).trigger('hashchange');
 }());

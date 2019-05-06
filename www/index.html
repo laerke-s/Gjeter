@@ -48,14 +48,14 @@
             <h1 class="title">Velg observasjon</h1>
         </header>
         <div class="content content-padded">
-            <a href="#sheep" class="btn btn-block btn-positive">Saueflokk</a>
-            <a href="#sheep" class="btn btn-block btn-positive">Død sau</a>
+            <a href="#herd" class="btn btn-block btn-positive">Saueflokk</a>
+            <a class="btn btn-block btn-positive">Død sau</a>
             <a href="#other" class="btn btn-block btn-positive">Annet</a>
         </div>
     </div>
 
     <!-- Sheep page -->
-    <div class="sheep page">
+    <div class="herd page">
         <header class="bar bar-nav">
             <a class="btn btn-link btn-nav pull-left" href="#obs">
                 <span class="icon icon-left-nav"></span>
@@ -65,19 +65,19 @@
         <div class="content content-padded">
             <ul class="table-view">
                 <li class="table-view-cell">
-                    <a class="navigate-right" href="#register">
+                    <a class="navigate-right" href="#register_sheep">
                         <span class="sheep_count badge">-1</span>
                         Sau
                     </a>
                 </li>
                 <li class="table-view-cell">
-                    <a class="navigate-right">
+                    <a class="navigate-right" href="#register_lamb">
                         <span class="lamb_count badge">-1</span>
                         Lam
                     </a>
                 </li>
                 <li class="table-view-cell">
-                    <a class="navigate-right">
+                    <a class="navigate-right" href="#register_total">
                         <span class="total_count badge">-1</span>
                         Totalt antall
                     </a>
@@ -97,10 +97,10 @@
     <!-- Register page -->
     <div class="register page">
         <header class="bar bar-nav">
-            <a class="btn btn-link btn-nav pull-left" href="#sheep">
+            <a class="btn btn-link btn-nav pull-left" href="#herd">
                 <span class="icon icon-left-nav"></span>
             </a>
-            <h1 class="title">Sau</h1>
+            <h1 class="title">Tell opp</h1>
         </header>
         <div class="content content-padded">
             <ul class="table-view">
@@ -108,11 +108,11 @@
                     <p style="display: inline">Antall registrert:</p>
                     <span>
                         <button id="minus" class="btn">-</button>
-                        <output class="sheep_count btn">-1</output>
+                        <output id="count_btn" class="btn">-1</output>
                         <button id="plus" class="btn">+</button>
                     </span>
                 </li>
-                <li class="table-view-cell">
+                <li id="color_list" class="table-view-cell">
                     <p style="display: inline">Velg farge:</p>
                     <div>
                         <span>
@@ -143,7 +143,7 @@
                 <a class="tab-item" href="#obs">
                     Avbryt
                 </a>
-                <a class="tab-item" href="#sheep">
+                <a class="tab-item" href="#herd">
                     Lagre
                 </a>
             </nav>
