@@ -131,6 +131,6 @@
         FastClick.attach(document.body);
     }, false);
     // Manually trigger a hashchange to start the app.
-    $('#register_div').on('click', addCount);
+    $('#register_div').on('touchend', addCount);
     $(window).trigger('hashchange');
 }());

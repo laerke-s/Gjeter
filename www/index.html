@@ -102,7 +102,7 @@
             </a>
             <h1 class="title">Sau</h1>
         </header>
-        <div class="content content-padded" style="display: flex; flex-flow: column">
+        <div class="content content-padded">
             <ul class="table-view">
                 <li class="table-view-cell" style="padding-right: 10px; display: flex; justify-content: space-around;">
                     <p style="display: inline">Antall registrert:</p>
@@ -116,30 +116,34 @@
                     <p style="display: inline">Velg farge:</p>
                     <div>
                         <span>
-                            <input type="radio" name="color" value="white" checked>
-                            <label for="huey">Hvit</label>
+                            <label for="white">
+                                <input type="radio" id="white" name="color" value="white" checked>
+                                Hvit
+                            </label>
                         </span>
-
                         <span>
-                            <input type="radio" name="color" value="black">
-                            <label for="dewey">Svart</label>
+                            <label for="black">
+                                <input type="radio" id="black" name="color" value="black">
+                                Svart
+                            </label>
                         </span>
-
                         <span>
-                            <input type="radio" name="color" value="brown">
-                            <label for="louie">Brun</label>
+                            <label for="brown">
+                                <input type="radio" id="brown" name="color" value="brown">
+                                Brun
+                            </label>
                         </span>
                     </div>
                 </li>
             </ul>
-            <div id="register_div" style="flex-grow: 1; display: flex; justify-content: center; flex-wrap: wrap;">
+            <div id="register_div" style="width: 100%; height: 70%; display: flex; justify-content: center; flex-wrap: wrap;">
                 <p>Dra (swipe) for å registrere et individ</p>
             </div>
             <nav class="bar bar-tab">
                 <a class="tab-item" href="#obs">
                     Avbryt
                 </a>
-                <a class="tab-item" href="#map">
+                <a class="tab-item" href="#sheep">
                     Lagre
                 </a>
             </nav>
