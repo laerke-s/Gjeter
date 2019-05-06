@@ -7,9 +7,7 @@
         },
         // Map with markers for your journey and observations
         '#map': function () {
-            sheep = 0;
-            lamb = 0;
-            total = 0;
+            counters = [0, 0, 0];
             renderAnyPage('.map');
         },
         // Page with observation options
