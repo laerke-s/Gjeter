@@ -49,12 +49,13 @@
         </header>
         <div class="content content-padded">
             <a href="#herd" class="btn btn-block btn-positive">Saueflokk</a>
+            <a href="#herd_200" class="btn btn-block btn-positive">Saueflokk innen 200m</a>
             <a class="btn btn-block btn-positive">Død sau</a>
             <a href="#other" class="btn btn-block btn-positive">Annet</a>
         </div>
     </div>
 
-    <!-- Sheep page -->
+    <!-- Herd page -->
     <div class="herd page">
         <header class="bar bar-nav">
             <a class="btn btn-link btn-nav pull-left" href="#obs">
@@ -76,13 +77,20 @@
                         Lam
                     </a>
                 </li>
-                <li class="table-view-cell">
+                <li class="herd_outside table-view-cell">
                     <a class="navigate-right" href="#register_total">
                         <span class="total_count badge">-1</span>
                         Totalt antall
                     </a>
                 </li>
+                <li class="herd_inside table-view-cell">
+                    <a class="navigate-right" href="#register_earmark_lamb">
+                        <span class="earmark_lamb_count badge">-1</span>
+                        Lam på øremerkene
+                    </a>
+                </li>
             </ul>
+            <input class="herd_inside" type="text" placeholder="Eiers navn">
         </div>
         <nav class="bar bar-tab">
             <a class="tab-item" href="#obs">
@@ -97,7 +105,7 @@
     <!-- Register page -->
     <div class="register page">
         <header class="bar bar-nav">
-            <a class="btn btn-link btn-nav pull-left" href="#herd">
+            <a class="back_btn btn btn-link btn-nav pull-left" href="#herd">
                 <span class="icon icon-left-nav"></span>
             </a>
             <h1 class="title">Tell opp</h1>
@@ -143,7 +151,7 @@
                 <a class="tab-item" href="#obs">
                     Avbryt
                 </a>
-                <a class="tab-item" href="#herd">
+                <a class="back_btn tab-item" href="#herd">
                     Lagre
                 </a>
             </nav>

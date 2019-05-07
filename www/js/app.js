@@ -7,7 +7,7 @@
         },
         // Map with markers for your journey and observations
         '#map': function () {
-            counters = [0, 0, 0];
+            counters = [0, 0, 0, 0];
             renderAnyPage('.map');
         },
         // Page with observation options
@@ -16,6 +16,14 @@
         },
         '#herd': function () {
             updateCounts();
+            $('.herd_outside').show();
+            $('.herd_inside').hide();
+            renderAnyPage('.herd');
+        },
+        '#herd_200': function () {
+            updateCounts();
+            $('.herd_outside').hide();
+            $('.herd_inside').show();
             renderAnyPage('.herd');
         },
         '#register_sheep': function () {
@@ -27,6 +35,9 @@
         '#register_total': function () {
             renderRegisterPage('total');
         },
+        '#register_earmark_lamb': function () {
+            renderRegisterPage('earmark');
+        },
         '#other': function () {
             renderAnyPage('.other');
         }
@@ -34,8 +45,8 @@
     var map;
     // This is very ugly, and should have been a map,
     // but I found no elegant way of saying ++ on a map value.
-    // counters[0]=sheep, counters[1]=lamb, counters[2]=total
-    var counters = [0, 0, 0];
+    // counters[0]=sheep, counters[1]=lamb, counters[2]=total, counters[3]=earmark_lambs
+    var counters = [0, 0, 0, 0];
     var currentlyCounting = -1;
 
     $(window).on('hashchange', function () {
@@ -76,6 +87,7 @@
     }
 
     function renderRegisterPage(regID) {
+        $('.register .back_btn').attr('href', pageHistory[pageHistory.length - 2]);
         var title = $('.register .title');
         var colorLst = $('#color_list');
         switch (regID) {
@@ -94,6 +106,11 @@
                 title.text('Totalt antall');
                 colorLst.hide();
                 break;
+            case 'earmark':
+                currentlyCounting = 3;
+                title.text('Antall lam øremerket');
+                colorLst.hide();
+                break;
             default:
         }
         updateCountBtn();
@@ -104,6 +121,7 @@
         $('.sheep_count').text(counters[0].toString());
         $('.lamb_count').text(counters[1].toString());
         $('.total_count').text(counters[2].toString());
+        $('.earmark_lamb_count').text(counters[3].toString());
     }
 
     function updateCountBtn() {
