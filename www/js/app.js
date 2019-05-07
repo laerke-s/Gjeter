@@ -5,16 +5,49 @@
         '': function () {
             renderAnyPage('.start');
         },
-        // Single Products page.
+        // Map with markers for your journey and observations
         '#map': function () {
+            counters = [0, 0, 0, 0];
             renderAnyPage('.map');
         },
-        // Page with filtered products
+        // Page with observation options
         '#obs': function () {
             renderAnyPage('.obs');
+        },
+        '#herd': function () {
+            updateCounts();
+            $('.herd_outside').show();
+            $('.herd_inside').hide();
+            renderAnyPage('.herd');
+        },
+        '#herd_200': function () {
+            updateCounts();
+            $('.herd_outside').hide();
+            $('.herd_inside').show();
+            renderAnyPage('.herd');
+        },
+        '#register_sheep': function () {
+            renderRegisterPage('sheep');
+        },
+        '#register_lamb': function () {
+            renderRegisterPage('lamb');
+        },
+        '#register_total': function () {
+            renderRegisterPage('total');
+        },
+        '#register_earmark_lamb': function () {
+            renderRegisterPage('earmark');
+        },
+        '#other': function () {
+            renderAnyPage('.other');
         }
     };
     var map;
+    // This is very ugly, and should have been a map,
+    // but I found no elegant way of saying ++ on a map value.
+    // counters[0]=sheep, counters[1]=lamb, counters[2]=total, counters[3]=earmark_lambs
+    var counters = [0, 0, 0, 0];
+    var currentlyCounting = -1;
 
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
@@ -53,6 +86,60 @@
         $(selector).show();
     }
 
+    function renderRegisterPage(regID) {
+        $('.register .back_btn').attr('href', pageHistory[pageHistory.length - 2]);
+        var title = $('.register .title');
+        var colorLst = $('#color_list');
+        switch (regID) {
+            case 'sheep':
+                currentlyCounting = 0;
+                title.text('Sau');
+                colorLst.show();
+                break;
+            case 'lamb':
+                currentlyCounting = 1;
+                title.text('Lam');
+                colorLst.show();
+                break;
+            case 'total':
+                currentlyCounting = 2;
+                title.text('Totalt antall');
+                colorLst.hide();
+                break;
+            case 'earmark':
+                currentlyCounting = 3;
+                title.text('Antall lam øremerket');
+                colorLst.hide();
+                break;
+            default:
+        }
+        updateCountBtn();
+        renderAnyPage('.register');
+    }
+
+    function updateCounts() {
+        $('.sheep_count').text(counters[0].toString());
+        $('.lamb_count').text(counters[1].toString());
+        $('.total_count').text(counters[2].toString());
+        $('.earmark_lamb_count').text(counters[3].toString());
+    }
+
+    function updateCountBtn() {
+        $('#count_btn').text(counters[currentlyCounting].toString());
+    }
+
+    function addCount() {
+        counters[currentlyCounting]++;
+        updateCountBtn();
+    }
+
+    function minusCount() {
+        if (counters[currentlyCounting] > 0) {
+            counters[currentlyCounting]--;
+            updateCountBtn();
+        }
+    }
+
     function initMap() {
         map = L.map('map-container').fitWorld();
         // Fetching map from Kartverket
@@ -77,8 +164,10 @@
             L.circleMarker(e.latlng, {
                     color: 'red'
                 }).addTo(map)
+                .on('click', function (e) {
+                    window.location.hash = 'obs';
+                })
                 .bindPopup("Din obervasjon er på:<br/>" + e.latlng.toString());
-            window.location.hash = 'obs';
         }
 
         function onLocationFound(e) {
@@ -91,16 +180,18 @@
             alert(e.message);
         }
 
-        map.on('click', mapDBClick);
+        map.on('bdclick', mapDBClick);
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
     }
-
 
     // If on mobile
     document.addEventListener('deviceready', function () {
         FastClick.attach(document.body);
     }, false);
     // Manually trigger a hashchange to start the app.
+    $('#register_div').on('touchend', addCount);
+    $('#plus').on('click', addCount);
+    $('#minus').on('click', minusCount);
     $(window).trigger('hashchange');
 }());

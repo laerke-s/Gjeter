@@ -48,12 +48,141 @@
             <h1 class="title">Velg observasjon</h1>
         </header>
         <div class="content content-padded">
-            <a href="#map" class="btn btn-block btn-positive">Sau</a>
-            <a href="#map" class="btn btn-block btn-positive">Død sau</a>
-            <a href="#map" class="btn btn-block btn-positive">Annet</a>
+            <a href="#herd" class="btn btn-block btn-positive">Saueflokk</a>
+            <a href="#herd_200" class="btn btn-block btn-positive">Saueflokk innen 200m</a>
+            <a class="btn btn-block btn-positive">Død sau</a>
+            <a href="#other" class="btn btn-block btn-positive">Annet</a>
         </div>
     </div>
 
+    <!-- Herd page -->
+    <div class="herd page">
+        <header class="bar bar-nav">
+            <a class="btn btn-link btn-nav pull-left" href="#obs">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title">Observert saueflokk</h1>
+        </header>
+        <div class="content content-padded">
+            <ul class="table-view">
+                <li class="table-view-cell">
+                    <a class="navigate-right" href="#register_sheep">
+                        <span class="sheep_count badge">-1</span>
+                        Sau
+                    </a>
+                </li>
+                <li class="table-view-cell">
+                    <a class="navigate-right" href="#register_lamb">
+                        <span class="lamb_count badge">-1</span>
+                        Lam
+                    </a>
+                </li>
+                <li class="herd_outside table-view-cell">
+                    <a class="navigate-right" href="#register_total">
+                        <span class="total_count badge">-1</span>
+                        Totalt antall
+                    </a>
+                </li>
+                <li class="herd_inside table-view-cell">
+                    <a class="navigate-right" href="#register_earmark_lamb">
+                        <span class="earmark_lamb_count badge">-1</span>
+                        Lam på øremerkene
+                    </a>
+                </li>
+            </ul>
+            <input class="herd_inside" type="text" placeholder="Eiers navn">
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="#obs">
+                Avbryt
+            </a>
+            <a class="tab-item" href="#map">
+                Lagre
+            </a>
+        </nav>
+    </div>
+
+    <!-- Register page -->
+    <div class="register page">
+        <header class="bar bar-nav">
+            <a class="back_btn btn btn-link btn-nav pull-left" href="#herd">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title">Tell opp</h1>
+        </header>
+        <div class="content content-padded">
+            <ul class="table-view">
+                <li class="table-view-cell" style="padding-right: 10px; display: flex; justify-content: space-around;">
+                    <p style="display: inline">Antall registrert:</p>
+                    <span>
+                        <button id="minus" class="btn">-</button>
+                        <output id="count_btn" class="btn">-1</output>
+                        <button id="plus" class="btn">+</button>
+                    </span>
+                </li>
+                <li id="color_list" class="table-view-cell">
+                    <p style="display: inline">Velg farge:</p>
+                    <div>
+                        <span>
+                            <label for="white">
+                                <input type="radio" id="white" name="color" value="white" checked>
+                                Hvit
+                            </label>
+                        </span>
+                        <span>
+                            <label for="black">
+                                <input type="radio" id="black" name="color" value="black">
+                                Svart
+                            </label>
+                        </span>
+                        <span>
+                            <label for="brown">
+                                <input type="radio" id="brown" name="color" value="brown">
+                                Brun
+                            </label>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+            <div id="register_div" style="width: 100%; height: 70%; display: flex; justify-content: center; flex-wrap: wrap;">
+                <p>Dra (swipe) for å registrere et individ</p>
+            </div>
+            <nav class="bar bar-tab">
+                <a class="tab-item" href="#obs">
+                    Avbryt
+                </a>
+                <a class="back_btn tab-item" href="#herd">
+                    Lagre
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Other page -->
+    <div class="other page">
+        <header class="bar bar-nav">
+            <a class="btn btn-link btn-nav pull-left" href="#obs">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title">Annet</h1>
+        </header>
+        <div class="content content-padded">
+            <form>
+                <input type="text" placeholder="Emne">
+                <textarea rows="7" placeholder="Hva har du observert?"></textarea>
+            </form>
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="#obs">
+                Avbryt
+            </a>
+            <a class="tab-item" href="#map">
+                Lagre
+            </a>
+        </nav>
+    </div>
+
+    <!-- Error page -->
     <div class="error page">
         <h3>Sorry, something went wrong :(</h3>
     </div>
