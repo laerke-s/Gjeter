@@ -150,39 +150,38 @@
         L.control.scale({
             imperial: false
         }).addTo(map);
-        // Use GPS and the Geolocation API to locate device
-        map.locate({
-            setView: true,
-            maxZoom: 16,
-            maximumAge: 3600000,
-            enableHighAccuracy: true,
-            //watch: true
-        });
-        map.doubleClickZoom.disable();
-
-        function mapDBClick(e) {
-            L.circleMarker(e.latlng, {
-                    color: 'red'
-                }).addTo(map)
-                .on('click', function (e) {
-                    window.location.hash = 'obs';
-                })
-                .bindPopup("Din obervasjon er på:<br/>" + e.latlng.toString());
-        }
 
         function onLocationFound(e) {
-            var radius = e.accuracy / 2;
-            L.marker(e.latlng).addTo(map).bindPopup("Du er her:<br/>" + e.latlng);
-            L.circle(e.latlng, radius).addTo(map);
+            var latl = L.latLng(e.coords.latitude, e.coords.longitude);
+            console.log('Location was found at: ' + latl);
+            var radius = e.coords.accuracy / 2;
+            L.circle(latl, radius).addTo(map);
+            map.setView(latl, 17);
+            map.invalidateSize();
+            cons();
         }
 
         function onLocationError(e) {
-            alert(e.message);
+            console.log('Location was not found.');
+            alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
         }
 
-        map.on('bdclick', mapDBClick);
-        map.on('locationfound', onLocationFound);
-        map.on('locationerror', onLocationError);
+        // Use GPS and the Geolocation API to locate device
+        // Using this instead of the map.locate function from Leaflet because it did not work on android.
+        navigator.geolocation.getCurrentPosition(
+            onLocationFound,
+            onLocationError, {
+                timeout: 1000 * 60,
+                enableHighAccuracy: true,
+                maximumAge: 1000 * 60 * 60
+            }
+        );
+
+        function cons() {
+            console.log('Size was: ' + map.getSize());
+            console.log('Zoom was: ' + map.getZoom());
+            console.log('Center was found at: ' + map.getCenter());
+        }
     }
 
     // If on mobile
