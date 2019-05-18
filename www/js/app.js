@@ -1,4 +1,5 @@
 (function () {
+    //--- Page routing variables 
     var pageHistory = [];
     const pageMap = {
         // The Startpage.
@@ -42,12 +43,16 @@
             renderAnyPage('.other');
         }
     };
-    var map;
     // This is very ugly, and should have been a map,
     // but I found no elegant way of saying ++ on a map value.
     // counters[0]=sheep, counters[1]=lamb, counters[2]=total, counters[3]=earmark_lambs
     var counters = [0, 0, 0, 0];
     var currentlyCounting = -1;
+
+    //--- Map variables
+    var map;
+    var walk = [];
+    var poly;
 
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
@@ -158,12 +163,12 @@
             L.circle(latl, radius).addTo(map);
             map.setView(latl, 17);
             map.invalidateSize();
-            cons();
-        }
-
-        function onLocationError(e) {
-            console.log('Location was not found.');
-            alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            walk.push(latl);
+            poly = new L.polyline(walk, {
+                color: 'red'
+            }).addTo(map);
+            //After finding location for the first time watch location
+            initWatch();
         }
 
         // Use GPS and the Geolocation API to locate device
@@ -176,12 +181,32 @@
                 maximumAge: 1000 * 60 * 60
             }
         );
+    }
 
-        function cons() {
-            console.log('Size was: ' + map.getSize());
-            console.log('Zoom was: ' + map.getZoom());
-            console.log('Center was found at: ' + map.getCenter());
-        }
+    function onLocationError(e) {
+        console.log('Location was not found.');
+        alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+    }
+
+    function updateWalk(e) {
+        poly.remove();
+        walk.push([e.coords.latitude, e.coords.longitude]);
+        console.log('Location was found at: ' + e.coords.latitude + ' ' + e.coords.longitude);
+        poly = new L.polyline(walk, {
+            color: 'red'
+        });
+        poly.addTo(map);
+    }
+
+    function initWatch() {
+        navigator.geolocation.watchPosition(
+            updateWalk,
+            onLocationError, {
+                timeout: 1000 * 60,
+                enableHighAccuracy: true,
+                maximumAge: 1000 * 60 * 60
+            }
+        );
     }
 
     // If on mobile
