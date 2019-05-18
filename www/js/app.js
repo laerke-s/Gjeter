@@ -51,15 +51,13 @@
 
     //--- Map variables
     var map;
-    var walk = [];
+    var walk;
     var poly;
+    var watchID;
 
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
         if (hash === '#map' && pageHistory[pageHistory.length - 1] === '') {
-            if (map != undefined) {
-                map.remove();
-            }
             initMap();
         } else if (hash === pageHistory[pageHistory.length - 2]) {
             pageHistory.pop();
@@ -146,6 +144,15 @@
     }
 
     function initMap() {
+        //Remove any instances that have been
+        if (map != undefined) {
+            map.remove();
+        }
+        if (watchID != undefined) {
+            navigator.geolocation.clearWatch(watchID);
+        }
+        walk = [];
+        //Initiate map
         map = L.map('map-container').fitWorld();
         // Fetching map from Kartverket
         L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
@@ -199,7 +206,7 @@
     }
 
     function initWatch() {
-        navigator.geolocation.watchPosition(
+        watchID = navigator.geolocation.watchPosition(
             updateWalk,
             onLocationError, {
                 timeout: 1000 * 60,
