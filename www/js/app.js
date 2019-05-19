@@ -168,7 +168,7 @@
 
         function firstLocationFound(e) {
             var latl = L.latLng(e.coords.latitude, e.coords.longitude);
-            console.log('Location was found at: ' + latl);
+            console.log('First location found at: ' + latl);
             var radius = e.coords.accuracy / 2;
             L.circle(latl, radius).addTo(map);
             map.setView(latl, 17);
@@ -203,7 +203,6 @@
             return;
         }
         lastUpdate = now;
-        console.log('Timestamp: ' + e.timestamp);
         walk.push([e.coords.latitude, e.coords.longitude]);
         console.log('Location was found at: ' + e.coords.latitude + ' ' + e.coords.longitude);
         poly.remove();
