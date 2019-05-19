@@ -51,9 +51,12 @@
 
     //--- Map variables
     var map;
+    var watchID;
+    // update the walkarray each half minute
+    const msFrequency = 30 * 1000;
+    var lastUpdate = new Date();
     var walk;
     var poly;
-    var watchID;
 
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
@@ -163,7 +166,7 @@
             imperial: false
         }).addTo(map);
 
-        function onLocationFound(e) {
+        function firstLocationFound(e) {
             var latl = L.latLng(e.coords.latitude, e.coords.longitude);
             console.log('Location was found at: ' + latl);
             var radius = e.coords.accuracy / 2;
@@ -171,9 +174,7 @@
             map.setView(latl, 17);
             map.invalidateSize();
             walk.push(latl);
-            poly = new L.polyline(walk, {
-                color: 'red'
-            }).addTo(map);
+            poly = new L.polyline(walk).addTo(map);
             //After finding location for the first time watch location
             initWatch();
         }
@@ -181,7 +182,7 @@
         // Use GPS and the Geolocation API to locate device
         // Using this instead of the map.locate function from Leaflet because it did not work on android.
         navigator.geolocation.getCurrentPosition(
-            onLocationFound,
+            firstLocationFound,
             onLocationError, {
                 timeout: 1000 * 60,
                 enableHighAccuracy: true,
@@ -196,13 +197,19 @@
     }
 
     function updateWalk(e) {
-        poly.remove();
+        var now = new Date();
+        if (lastUpdate && (now.getTime() - lastUpdate.getTime()) < msFrequency) {
+            //Too soon to update
+            return;
+        }
+        lastUpdate = now;
+        console.log('Timestamp: ' + e.timestamp);
         walk.push([e.coords.latitude, e.coords.longitude]);
         console.log('Location was found at: ' + e.coords.latitude + ' ' + e.coords.longitude);
+        poly.remove();
         poly = new L.polyline(walk, {
             color: 'red'
-        });
-        poly.addTo(map);
+        }).addTo(map);
     }
 
     function initWatch() {
