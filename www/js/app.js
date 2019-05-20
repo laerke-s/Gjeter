@@ -52,8 +52,8 @@
     //--- Map variables
     var map;
     var watchID;
-    // update the walkarray each half minute
-    const msFrequency = 30 * 1000;
+    // update the walkarray each quarter of a minute
+    const msFrequency = 15 * 1000;
     var lastUpdate = new Date();
     var walk;
     var poly;
