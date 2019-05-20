@@ -1,4 +1,5 @@
 (function () {
+    //--- Page routing variables 
     var pageHistory = [];
     const pageMap = {
         // The Startpage.
@@ -42,19 +43,24 @@
             renderAnyPage('.other');
         }
     };
-    var map;
     // This is very ugly, and should have been a map,
     // but I found no elegant way of saying ++ on a map value.
     // counters[0]=sheep, counters[1]=lamb, counters[2]=total, counters[3]=earmark_lambs
     var counters = [0, 0, 0, 0];
     var currentlyCounting = -1;
 
+    //--- Map variables
+    var map;
+    var watchID;
+    // update the walkarray each quarter of a minute
+    const msFrequency = 15 * 1000;
+    var lastUpdate = new Date();
+    var walk;
+    var poly;
+
     $(window).on('hashchange', function () {
         var hash = window.location.hash;
         if (hash === '#map' && pageHistory[pageHistory.length - 1] === '') {
-            if (map != undefined) {
-                map.remove();
-            }
             initMap();
         } else if (hash === pageHistory[pageHistory.length - 2]) {
             pageHistory.pop();
@@ -141,6 +147,15 @@
     }
 
     function initMap() {
+        //Remove any instances that have been
+        if (map != undefined) {
+            map.remove();
+        }
+        if (watchID != undefined) {
+            navigator.geolocation.clearWatch(watchID);
+        }
+        walk = [];
+        //Initiate map
         map = L.map('map-container').fitWorld();
         // Fetching map from Kartverket
         L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
@@ -151,37 +166,60 @@
             imperial: false
         }).addTo(map);
 
-        function onLocationFound(e) {
+        function firstLocationFound(e) {
             var latl = L.latLng(e.coords.latitude, e.coords.longitude);
-            console.log('Location was found at: ' + latl);
+            console.log('First location found at: ' + latl);
             var radius = e.coords.accuracy / 2;
             L.circle(latl, radius).addTo(map);
             map.setView(latl, 17);
             map.invalidateSize();
-            cons();
-        }
-
-        function onLocationError(e) {
-            console.log('Location was not found.');
-            alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            walk.push(latl);
+            poly = new L.polyline(walk).addTo(map);
+            //After finding location for the first time watch location
+            initWatch();
         }
 
         // Use GPS and the Geolocation API to locate device
         // Using this instead of the map.locate function from Leaflet because it did not work on android.
         navigator.geolocation.getCurrentPosition(
-            onLocationFound,
+            firstLocationFound,
             onLocationError, {
                 timeout: 1000 * 60,
                 enableHighAccuracy: true,
                 maximumAge: 1000 * 60 * 60
             }
         );
+    }
 
-        function cons() {
-            console.log('Size was: ' + map.getSize());
-            console.log('Zoom was: ' + map.getZoom());
-            console.log('Center was found at: ' + map.getCenter());
+    function onLocationError(e) {
+        console.log('Location was not found.');
+        alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+    }
+
+    function updateWalk(e) {
+        var now = new Date();
+        if (lastUpdate && (now.getTime() - lastUpdate.getTime()) < msFrequency) {
+            //Too soon to update
+            return;
         }
+        lastUpdate = now;
+        walk.push([e.coords.latitude, e.coords.longitude]);
+        console.log('Location was found at: ' + e.coords.latitude + ' ' + e.coords.longitude);
+        poly.remove();
+        poly = new L.polyline(walk, {
+            color: 'red'
+        }).addTo(map);
+    }
+
+    function initWatch() {
+        watchID = navigator.geolocation.watchPosition(
+            updateWalk,
+            onLocationError, {
+                timeout: 1000 * 60,
+                enableHighAccuracy: true,
+                maximumAge: 1000 * 60 * 60
+            }
+        );
     }
 
     // If on mobile
