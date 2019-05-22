@@ -17,12 +17,28 @@
             margin: 0;
         }
         input[type="number"] {
-            text-align:right;
             -moz-appearance: textfield;
+            text-align:right;
+            max-width: 70%;
         }
         /* Space between radio buttons */
         label{
             padding-right: 5px;
+        }
+        p{
+            display: inline;
+        }
+        ul{
+            text-align: center;
+        }
+        #map-container{
+            height: 100%;
+            width: 100%;
+        } 
+        #register_div{
+            width: 100%; 
+            height: 70%; 
+            text-align: center;
         }
     </style>
 </head>
@@ -54,7 +70,7 @@
             </a>
         </header>
         <div class="content content-padded">
-            <div id="map-container" style="height: 100%; width: 100%;"></div>
+            <div id="map-container"></div>
         </div>
     </div>
 
@@ -131,9 +147,9 @@
             <h1 class="title">Tell opp</h1>
         </header>
         <div class="content content-padded">
-            <ul class="table-view" style="text-align: center;">
+            <ul class="table-view">
                 <li class="table-view-cell">
-                    <p style="display: inline">Antall registrert:</p>
+                    <p>Antall registrert:</p>
                     <span>
                         <button id="minus" class="btn">-</button>
                         <output id="count_btn" class="btn">-1</output>
@@ -141,8 +157,8 @@
                     </span>
                 </li>
                 <li id="color_list" class="table-view-cell">
-                    <p style="display: inline">Velg farge:</p>
-                    <div style="display: flex; justify-content: space-around;">
+                    <p>Velg farge:</p>
+                    <div>
                         <span>
                             <label for="white">
                                 <input type="radio" id="white" name="color" value="white" checked>
@@ -164,7 +180,7 @@
                     </div>
                 </li>
             </ul>
-            <div id="register_div" style="width: 100%; height: 70%; display: flex; justify-content: center; flex-wrap: wrap;">
+            <div id="register_div">
                 <p>Dra (swipe) for å registrere et individ</p>
             </div>
             <nav class="bar bar-tab">
@@ -188,7 +204,7 @@
         </header>
         <div class="content content-padded">
             <form>
-                <ul class="table-view" style="text-align: center;">
+                <ul class="table-view">
                     <li class="table-view-cell">
                         <span>
                             <label for="sheep">
@@ -208,10 +224,10 @@
                 <input type="text" placeholder="Navn på kontaktet pers">
                 <input class="dead" type="text" placeholder="Trolig dødsårsak">
                 <ul class="dead table-view">
-                    <li class="table-view-cell" style="text-align: center;">
+                    <li class="table-view-cell">
                         <p>Hvor lenge har kadaveret ligget?</p>
                         <span>
-                            <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="0" style="max-width: 70%;" /> dager
+                            <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="0" /> dager
                             <!-- <button id="minus_days" class="btn">-</button>
                              <output id="count_days_btn" class="btn">0</output> 
                             <button id="plus_days" class="btn">+</button> -->
