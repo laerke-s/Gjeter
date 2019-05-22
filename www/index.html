@@ -21,6 +21,9 @@
             text-align:right;
             max-width: 70%;
         }
+        input[type="radio"]{
+            transform: scale(1.5);
+        }
         /* Space between radio buttons */
         label{
             padding-right: 5px;
@@ -160,20 +163,20 @@
                     <p>Velg farge:</p>
                     <div>
                         <span>
+                            <input type="radio" id="white" name="color" value="white" checked>
                             <label for="white">
-                                <input type="radio" id="white" name="color" value="white" checked>
                                 Hvit
                             </label>
                         </span>
                         <span>
+                            <input type="radio" id="black" name="color" value="black">
                             <label for="black">
-                                <input type="radio" id="black" name="color" value="black">
                                 Svart
                             </label>
                         </span>
                         <span>
+                            <input type="radio" id="brown" name="color" value="brown">
                             <label for="brown">
-                                <input type="radio" id="brown" name="color" value="brown">
                                 Brun
                             </label>
                         </span>
@@ -207,14 +210,14 @@
                 <ul class="table-view">
                     <li class="table-view-cell">
                         <span>
+                            <input type="radio" id="sheep" name="type" value="sheep" checked>
                             <label for="sheep">
-                                <input type="radio" id="sheep" name="type" value="sheep" checked>
                                 Sau
                             </label>
                         </span>
                         <span>
+                            <input type="radio" id="lamb" name="type" value="lamb">
                             <label for="lamb">
-                                <input type="radio" id="lamb" name="type" value="lamb">
                                 Lam
                             </label>
                         </span>
@@ -234,7 +237,7 @@
                         </span>
                     </li>
                 </ul>
-                <textarea class="wounded" rows="4" placeholder="Hva er slags skade"></textarea>
+                <textarea class="wounded" rows="4" placeholder="Hva slags skade"></textarea>
                 <textarea rows="7" placeholder="Hva er blitt gjort"></textarea>
             </form>
         </div>
