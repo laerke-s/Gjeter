@@ -9,12 +9,47 @@
     <link href="assets/ratchet/css/ratchet.min.css" rel="stylesheet" />
     <link href="assets/leaflet/leaflet.css" rel="stylesheet" />
     <script src="assets/leaflet/leaflet.js"></script>
+
+    <style>
+        /* This is to remove the up and down arrows from the number input field */
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+            text-align:right;
+            max-width: 70%;
+        }
+        input[type="radio"]{
+            transform: scale(1.5);
+        }
+        /* Space between radio buttons */
+        label{
+            padding-right: 5px;
+        }
+        p{
+            display: inline;
+        }
+        ul{
+            text-align: center;
+        }
+        #map-container{
+            height: 100%;
+            width: 100%;
+        } 
+        #register_div{
+            width: 100%; 
+            height: 70%; 
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
 
     <!-- Start page -->
-    <div class="start page">
+    <div id="start" class="page">
         <header class="bar bar-nav">
             <h1 class="title">Velkommen til Gjeter</h1>
         </header>
@@ -27,7 +62,7 @@
     </div>
 
     <!-- Map page -->
-    <div class="map page">
+    <div id="map" class="page">
         <header class="bar bar-nav">
             <a class="btn btn-link btn-nav pull-left" href="#">
                 <span class="icon icon-left-nav"></span>
@@ -38,12 +73,12 @@
             </a>
         </header>
         <div class="content content-padded">
-            <div id="map-container" style="height: 100%; width: 100%;"></div>
+            <div id="map-container"></div>
         </div>
     </div>
 
     <!-- Observation page -->
-    <div class="obs page">
+    <div id="obs" class="page">
         <header class="bar bar-nav">
             <a class="btn btn-link btn-nav pull-left" href="#map">
                 <span class="icon icon-left-nav"></span>
@@ -53,13 +88,14 @@
         <div class="content content-padded">
             <a href="#herd" class="btn btn-block btn-positive">Saueflokk</a>
             <a href="#herd_200" class="btn btn-block btn-positive">Saueflokk innen 200m</a>
-            <a class="btn btn-block btn-positive">Død sau</a>
+            <a href="#dead" class="btn btn-block btn-positive">Død sau</a>
+            <a href="#wounded" class="btn btn-block btn-positive">Skadet sau</a>
             <a href="#other" class="btn btn-block btn-positive">Annet</a>
         </div>
     </div>
 
     <!-- Herd page -->
-    <div class="herd page">
+    <div id="herd" class="herd page">
         <header class="bar bar-nav">
             <a class="btn btn-link btn-nav pull-left" href="#obs">
                 <span class="icon icon-left-nav"></span>
@@ -106,7 +142,7 @@
     </div>
 
     <!-- Register page -->
-    <div class="register page">
+    <div id="register" class="page">
         <header class="bar bar-nav">
             <a class="back_btn btn btn-link btn-nav pull-left" href="#herd">
                 <span class="icon icon-left-nav"></span>
@@ -115,8 +151,8 @@
         </header>
         <div class="content content-padded">
             <ul class="table-view">
-                <li class="table-view-cell" style="padding-right: 10px; display: flex; justify-content: space-around;">
-                    <p style="display: inline">Antall registrert:</p>
+                <li class="table-view-cell">
+                    <p>Antall registrert:</p>
                     <span>
                         <button id="minus" class="btn">-</button>
                         <output id="count_btn" class="btn">-1</output>
@@ -124,30 +160,30 @@
                     </span>
                 </li>
                 <li id="color_list" class="table-view-cell">
-                    <p style="display: inline">Velg farge:</p>
+                    <p>Velg farge:</p>
                     <div>
                         <span>
+                            <input type="radio" id="white" name="color" value="white" checked>
                             <label for="white">
-                                <input type="radio" id="white" name="color" value="white" checked>
                                 Hvit
                             </label>
                         </span>
                         <span>
+                            <input type="radio" id="black" name="color" value="black">
                             <label for="black">
-                                <input type="radio" id="black" name="color" value="black">
                                 Svart
                             </label>
                         </span>
                         <span>
+                            <input type="radio" id="brown" name="color" value="brown">
                             <label for="brown">
-                                <input type="radio" id="brown" name="color" value="brown">
                                 Brun
                             </label>
                         </span>
                     </div>
                 </li>
             </ul>
-            <div id="register_div" style="width: 100%; height: 70%; display: flex; justify-content: center; flex-wrap: wrap;">
+            <div id="register_div">
                 <p>Dra (swipe) for å registrere et individ</p>
             </div>
             <nav class="bar bar-tab">
@@ -161,8 +197,62 @@
         </div>
     </div>
 
+    <!-- Dead / Wounded page -->
+    <div id="dead_wounded" class="page">
+        <header class="bar bar-nav">
+            <a class="btn btn-link btn-nav pull-left" href="#obs">
+                <span class="icon icon-left-nav"></span>
+            </a>
+            <h1 class="title"></h1>
+        </header>
+        <div class="content content-padded">
+            <form>
+                <ul class="table-view">
+                    <li class="table-view-cell">
+                        <span>
+                            <input type="radio" id="sheep" name="type" value="sheep" checked>
+                            <label for="sheep">
+                                Sau
+                            </label>
+                        </span>
+                        <span>
+                            <input type="radio" id="lamb" name="type" value="lamb">
+                            <label for="lamb">
+                                Lam
+                            </label>
+                        </span>
+                    </li>
+                </ul>
+                <input type="text" placeholder="Navn på eier">
+                <input type="text" placeholder="Navn på kontaktet pers">
+                <input class="dead" type="text" placeholder="Trolig dødsårsak">
+                <ul class="dead table-view">
+                    <li class="table-view-cell">
+                        <p>Hvor lenge har kadaveret ligget?</p>
+                        <span>
+                            <input type="number" pattern="[0-9]*" inputmode="numeric" min="0" value="0" /> dager
+                            <!-- <button id="minus_days" class="btn">-</button>
+                             <output id="count_days_btn" class="btn">0</output> 
+                            <button id="plus_days" class="btn">+</button> -->
+                        </span>
+                    </li>
+                </ul>
+                <textarea class="wounded" rows="4" placeholder="Hva slags skade"></textarea>
+                <textarea rows="7" placeholder="Hva er blitt gjort"></textarea>
+            </form>
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="#obs">
+                Avbryt
+            </a>
+            <a class="tab-item" href="#map">
+                Lagre
+            </a>
+        </nav>
+    </div>
+
     <!-- Other page -->
-    <div class="other page">
+    <div id="other" class="page">
         <header class="bar bar-nav">
             <a class="btn btn-link btn-nav pull-left" href="#obs">
                 <span class="icon icon-left-nav"></span>
@@ -186,7 +276,7 @@
     </div>
 
     <!-- Error page -->
-    <div class="error page">
+    <div id="error" class="page">
         <h3>Sorry, something went wrong :(</h3>
     </div>
 

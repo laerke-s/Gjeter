@@ -4,28 +4,28 @@
     const pageMap = {
         // The Startpage.
         '': function () {
-            renderAnyPage('.start');
+            renderAnyPage('#start');
         },
         // Map with markers for your journey and observations
         '#map': function () {
             counters = [0, 0, 0, 0];
-            renderAnyPage('.map');
+            renderAnyPage('#map');
         },
         // Page with observation options
         '#obs': function () {
-            renderAnyPage('.obs');
+            renderAnyPage('#obs');
         },
         '#herd': function () {
             updateCounts();
             $('.herd_outside').show();
             $('.herd_inside').hide();
-            renderAnyPage('.herd');
+            renderAnyPage('#herd');
         },
         '#herd_200': function () {
             updateCounts();
             $('.herd_outside').hide();
             $('.herd_inside').show();
-            renderAnyPage('.herd');
+            renderAnyPage('#herd');
         },
         '#register_sheep': function () {
             renderRegisterPage('sheep');
@@ -39,8 +39,20 @@
         '#register_earmark_lamb': function () {
             renderRegisterPage('earmark');
         },
+        '#wounded': function () {
+            $('.wounded').show();
+            $('.dead').hide();
+            $('#dead_wounded .title').text('Skadet');
+            renderAnyPage('#dead_wounded');
+        },
+        '#dead': function () {
+            $('.wounded').hide();
+            $('.dead').show();
+            $('#dead_wounded .title').text('Død');
+            renderAnyPage('#dead_wounded');
+        },
         '#other': function () {
-            renderAnyPage('.other');
+            renderAnyPage('#other');
         }
     };
     // This is very ugly, and should have been a map,
@@ -83,7 +95,7 @@
         }
         // If the keyword isn't listed in the above - render the error page.
         else {
-            renderAnyPage('.error');
+            renderAnyPage('#error');
         }
 
     }
@@ -93,8 +105,8 @@
     }
 
     function renderRegisterPage(regID) {
-        $('.register .back_btn').attr('href', pageHistory[pageHistory.length - 2]);
-        var title = $('.register .title');
+        $('#register .back_btn').attr('href', pageHistory[pageHistory.length - 2]);
+        var title = $('#register .title');
         var colorLst = $('#color_list');
         switch (regID) {
             case 'sheep':
@@ -120,7 +132,7 @@
             default:
         }
         updateCountBtn();
-        renderAnyPage('.register');
+        renderAnyPage('#register');
     }
 
     function updateCounts() {
