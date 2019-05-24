@@ -11,6 +11,59 @@
     <script src="assets/leaflet/leaflet.js"></script>
 
     <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-top: 5px;
+        }
+
+    /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 5px;
+            bottom: 5px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        /* All the above for custom switch */
+
         /* This is to remove the up and down arrows from the number input field */
         input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -34,14 +87,34 @@
         ul{
             text-align: center;
         }
-        #map-container{
-            height: 100%;
-            width: 100%;
-        } 
         #register_div{
             width: 100%; 
             height: 70%; 
             text-align: center;
+        }
+        #map-container{
+            position: relative;
+            height: 100%;
+            width: 100%;
+        } 
+        #register_btn{
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1;
+        }
+        #aim_img{
+            width: 50px;
+            height: 50px;
+            display: block;
+            margin:auto;
+            position: absolute;
+            top: 45.5%;
+            left: 43.2%;
+            /* transform does not work on old platforms therefore the explicit top and left numbers
+            transform: translate(-50%, -50%); */
+            /* Need a h*ll of a big z-index to get this over the whole map */
+            z-index: 10000;
         }
     </style>
 </head>
@@ -68,12 +141,16 @@
                 <span class="icon icon-left-nav"></span>
             </a>
             <h1 class="title">Kart</h1>
-            <a class="btn btn-link btn-nav pull-right" href="#obs">
-                <span class="icon icon-right-nav"></span>
-            </a>
+            <label class="switch pull-right">
+                <input id="aim_switch" type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
         </header>
         <div class="content content-padded">
-            <div id="map-container"></div>
+            <div id="map-container">
+                <img id="aim_img" src="img/aim.png" alt="" />
+            </div>
+            <a href="#obs" id="register_btn" class="btn btn-primary">Registrer observasjon</a>
         </div>
     </div>
 
@@ -135,7 +212,7 @@
             <a class="tab-item" href="#obs">
                 Avbryt
             </a>
-            <a class="tab-item" href="#map">
+            <a class="save_obs_btn tab-item" href="#map">
                 Lagre
             </a>
         </nav>
@@ -245,7 +322,7 @@
             <a class="tab-item" href="#obs">
                 Avbryt
             </a>
-            <a class="tab-item" href="#map">
+            <a class="save_obs_btn tab-item" href="#map">
                 Lagre
             </a>
         </nav>
@@ -269,7 +346,7 @@
             <a class="tab-item" href="#obs">
                 Avbryt
             </a>
-            <a class="tab-item" href="#map">
+            <a class="save_obs_btn tab-item" href="#map">
                 Lagre
             </a>
         </nav>

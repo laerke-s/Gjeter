@@ -63,6 +63,9 @@
 
     //--- Map variables
     var map;
+    // radius of circlemarkers in meters
+    const radObs = 50;
+    const radPoint = 5;
     var watchID;
     // update the walkarray each quarter of a minute
     const msFrequency = 15 * 1000;
@@ -171,19 +174,22 @@
         map = L.map('map-container').fitWorld();
         // Fetching map from Kartverket
         L.tileLayer('https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo4&zoom={z}&x={x}&y={y}', {
-            attribution: '<a href="http://www.kartverket.no/">Kartverket</a>'
+            attribution: '<a href="http://www.kartverket.no/">Kartverket</a>',
+            maxZoom: 19
         }).addTo(map);
         // Adding scale at the bottom of the map
         L.control.scale({
-            imperial: false
+            imperial: false,
+            position: 'bottomright'
         }).addTo(map);
 
         function firstLocationFound(e) {
             var latl = L.latLng(e.coords.latitude, e.coords.longitude);
             console.log('First location found at: ' + latl);
-            var radius = e.coords.accuracy / 2;
-            L.circle(latl, radius).addTo(map);
-            map.setView(latl, 17);
+            L.circle(latl, {
+                radius: radPoint
+            }).addTo(map);
+            map.setView(latl, 16);
             map.invalidateSize();
             walk.push(latl);
             poly = new L.polyline(walk).addTo(map);
@@ -234,13 +240,40 @@
         );
     }
 
+    function makeMarkers() {
+        var obs = map.getCenter();
+        console.log('Center and observation at: ' + obs.toString());
+        L.circle(obs, {
+            color: 'red',
+            radius: radObs
+        }).addTo(map);
+        var pos = walk[walk.length - 1];
+        console.log('Last recorded position: ' + pos);
+        L.circle(pos, {
+            radius: radPoint
+        }).addTo(map);
+        L.polyline([obs, pos], {
+            color: 'black',
+            dashArray: '4'
+        }).addTo(map);
+    }
+
+    // Add all listeners
+    $('#aim_switch').change(function () {
+        if ($(this).is(':checked')) {
+            $('#aim_img').show();
+        } else {
+            $('#aim_img').hide();
+        }
+    });
+    $('#register_div').on('touchend', addCount);
+    $('#plus').on('click', addCount);
+    $('#minus').on('click', minusCount);
+    $('.save_obs_btn').on('click', makeMarkers);
     // If on mobile
     document.addEventListener('deviceready', function () {
         FastClick.attach(document.body);
     }, false);
     // Manually trigger a hashchange to start the app.
-    $('#register_div').on('touchend', addCount);
-    $('#plus').on('click', addCount);
-    $('#minus').on('click', minusCount);
     $(window).trigger('hashchange');
 }());
