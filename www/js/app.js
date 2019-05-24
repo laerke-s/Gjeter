@@ -259,15 +259,18 @@
         }).addTo(map);
     }
 
-
+    // Add all listeners
+    $('#aim_switch').on('click', function () {
+        $('#aim_img').toggle();
+    });
+    $('#register_div').on('touchend', addCount);
+    $('#plus').on('click', addCount);
+    $('#minus').on('click', minusCount);
+    $('.save_obs_btn').on('click', makeMarkers);
     // If on mobile
     document.addEventListener('deviceready', function () {
         FastClick.attach(document.body);
     }, false);
     // Manually trigger a hashchange to start the app.
-    $('#register_div').on('touchend', addCount);
-    $('#plus').on('click', addCount);
-    $('#minus').on('click', minusCount);
-    $('.save_obs_btn').on('click', makeMarkers);
     $(window).trigger('hashchange');
 }());
