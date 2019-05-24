@@ -109,9 +109,10 @@
             display: block;
             margin:auto;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 45.5%;
+            left: 43.2%;
+            /* transform does not work on old platforms therefore the explicit top and left numbers
+            transform: translate(-50%, -50%); */
             /* Need a h*ll of a big z-index to get this over the whole map */
             z-index: 10000;
         }
@@ -141,8 +142,8 @@
             </a>
             <h1 class="title">Kart</h1>
             <label class="switch pull-right">
-                <input type="checkbox" checked>
-                <span id="aim_switch" class="slider"></span>
+                <input id="aim_switch" type="checkbox" checked>
+                <span class="slider"></span>
             </label>
         </header>
         <div class="content content-padded">

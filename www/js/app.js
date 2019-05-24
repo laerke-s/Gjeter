@@ -186,11 +186,10 @@
         function firstLocationFound(e) {
             var latl = L.latLng(e.coords.latitude, e.coords.longitude);
             console.log('First location found at: ' + latl);
-            var r = e.coords.accuracy / 2;
             L.circle(latl, {
-                radius: r
+                radius: radPoint
             }).addTo(map);
-            map.setView(latl, 17);
+            map.setView(latl, 16);
             map.invalidateSize();
             walk.push(latl);
             poly = new L.polyline(walk).addTo(map);
@@ -260,8 +259,12 @@
     }
 
     // Add all listeners
-    $('#aim_switch').on('click', function () {
-        $('#aim_img').toggle();
+    $('#aim_switch').change(function () {
+        if ($(this).is(':checked')) {
+            $('#aim_img').show();
+        } else {
+            $('#aim_img').hide();
+        }
     });
     $('#register_div').on('touchend', addCount);
     $('#plus').on('click', addCount);
