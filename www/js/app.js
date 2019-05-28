@@ -64,8 +64,8 @@
     //--- Map variables
     var map;
     // radius of circlemarkers in meters
-    const radObs = 50;
-    const radPoint = 5;
+    const radObs = 15;
+    const radPoint = 3;
     var watchID;
     // update the walkarray each quarter of a minute
     const msFrequency = 15 * 1000;
